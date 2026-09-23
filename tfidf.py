@@ -28,7 +28,7 @@ def compute_idf(documents, vocabulary):
         for tokens in documents:        #girilen cümledeki kelimeleri teker teker incelemek için for döngüsü oluşturuyoruz
             if word in tokens:          #tüm kelimelerin listesinden seçtiğimiz kelime girilen cümlenin herhangi bir yerinde var mı diye kontrol eder, true/false döndürür
                 doc_count += 1          #aynıysa sayaç bir artıyor
-        idf = np.log(n_docs/doc_count)  #girilen cümle uzunluğuyla seçili olan kelimenin kaç kere geçtiğini oranlayıp doğal logaritmaya alır
+        idf = np.log((n_docs + 1)/(doc_count + 1)) + 1  #girilen cümle uzunluğuyla seçili olan kelimenin kaç kere geçtiğini oranlayıp doğal logaritmaya alır
         idf_values.append(idf)          #bulunan oranı listeye ekler
     return np.array(idf_values) 
 
@@ -39,5 +39,4 @@ def cosine_similarity(vec_a, vec_b):
     dot_product = np.dot(vec_a, vec_b)      #A · B
     norm_a = np.linalg.norm(vec_a)          #linalg numpy kütüphanesinin lineer cebir alt modülü, norm() bir vektörün uzunluğunu hesaplar
     norm_b = np.linalg.norm(vec_b)
-    return dot_product / (norm_a * norm_b)  #(A · B) / (|A| × |B|)  
-    
+    return dot_product / (norm_a * norm_b)  #(A · B) / (|A| × |B|)
